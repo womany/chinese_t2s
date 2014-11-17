@@ -7,6 +7,16 @@ module ChineseT2s
 
       def call(env)
         status, headers, bodies = @app.call(env)
+
+        if status == 200
+          case bodies.class.to_s
+          when 'ActionDispatch::Response' # Rails
+            body = ChineseT2s::translate(bodies.body)
+            bodies.body = body
+          when 'Rack::BodyProxy' # Grape
+          end
+        end
+
         [status, headers, bodies]
       end
     end

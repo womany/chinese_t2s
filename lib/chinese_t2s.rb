@@ -44,3 +44,8 @@ module ChineseT2s
     content
   end
 end
+
+if defined?(::Rails)
+  require 'chinese_t2s/middleware'
+  require 'chinese_t2s/engine'
+end

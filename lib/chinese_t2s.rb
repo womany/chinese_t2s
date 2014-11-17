@@ -30,4 +30,17 @@ module ChineseT2s
 
   REGEX_WORDS_T, WORD_T2S = get_words
   REGEX_PHASES_T, PHASES_T2S = get_phases
+
+  public
+  def self.translate(content)
+    content.gsub!(/#{REGEX_WORDS_T}/) do |match|
+      WORD_T2S[match]
+    end
+
+    content.gsub!(/#{REGEX_PHASES_T}/) do |match|
+      PHASES_T2S[match]
+    end
+
+    content
+  end
 end

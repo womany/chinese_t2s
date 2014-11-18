@@ -23,7 +23,7 @@ module ChineseT2s
               bodies.body = body
             end
           when 'Rack::BodyProxy' # Grape
-            params = env['action_dispatch.request.parameters']
+            params = env['rack.request.query_hash']
 
             if (env['rack.session'][:chinese_t2s_lang] || params[:lang]) == 'cn'
               body = ChineseT2s::translate(bodies.body.first)

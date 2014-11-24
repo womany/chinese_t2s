@@ -11,8 +11,8 @@ module ChineseT2s
         if status == 200
           params = env['rack.request.query_hash']
 
-          case bodies.class.to_s
-          when 'ActionDispatch::Response' # Rails
+          case bodies
+          when ActionDispatch::Response # Rails
             if params[:set_lang].present?
               env['rack.session'].delete(:chinese_t2s_lang) if params[:set_lang] == 'tw'
               env['rack.session'][:chinese_t2s_lang] = 'cn' if params[:set_lang] == 'cn'
@@ -22,7 +22,7 @@ module ChineseT2s
               body = ChineseT2s::translate(bodies.body)
               bodies.body = body
             end
-          when 'Rack::BodyProxy' # Grape
+          when Rack::BodyProxy # Grape
             if (env['rack.session'][:chinese_t2s_lang] || params[:lang]) == 'cn'
               body = ChineseT2s::translate(bodies.body.first)
               bodies.body = [body]

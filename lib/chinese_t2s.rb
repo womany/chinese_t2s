@@ -6,8 +6,9 @@ module ChineseT2s
     cht_array = []
     hash = {}
 
-    File.read(File.dirname(__FILE__) + '/../vendor/word_t2s.txt').split("\r\n").each do |mapping|
-      t, s = mapping.split(',')
+    File.open(File.dirname(__FILE__) + '/../vendor/word_t2s.txt').each_line do |line|
+      line.chomp!
+      t, s = line.split(',')
       cht_array << t
       hash[t] = s
     end
@@ -19,8 +20,9 @@ module ChineseT2s
     cht_array = []
     hash = {}
 
-    File.read(File.dirname(__FILE__) + '/../vendor/phrase_t2s.txt').split("\r\n").each do |mapping|
-      s, t = mapping.split(',')
+    File.open(File.dirname(__FILE__) + '/../vendor/phrase_t2s.txt').each_line do |line|
+      line.chomp!
+      s, t = line.split(',')
       cht_array << t
       hash[t] = s
     end

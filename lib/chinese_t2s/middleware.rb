@@ -16,7 +16,7 @@ module ChineseT2s
         status, headers, bodies = @app.call(env)
 
         if status == 200
-          params = env['rack.request.query_hash']
+          params = env['rack.request.query_hash'] || {}
 
           if (env['rack.session']['chinese_t2s_lang'] || params['lang']) == 'cn'
             case bodies

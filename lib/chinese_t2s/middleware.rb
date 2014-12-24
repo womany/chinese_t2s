@@ -26,7 +26,7 @@ module ChineseT2s
             when Rack::BodyProxy # Grape
               if defined?(::Rails) && (::Rails::VERSION::MAJOR <= 3) || (::Rails::VERSION::MAJOR == 4 && ::RAILS::VERSION::MINOR == 0)
                 body = bodies.body.first
-                body.gsub!(/\\u([0-9a-z]{4})/) { [$1.to_i(16)].pack("U") }
+                body.gsub!(/((\\u[0-9a-z]{4})+)/){ $1[2..-1].split('\\u').map{|s| s.to_i(16)}.pack('U*') }
                 body = ChineseT2s::translate(body)
                 bodies.body = [body]
                 headers['Content-Length'] = body.bytesize.to_s

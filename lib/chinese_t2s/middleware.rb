@@ -15,7 +15,7 @@ module ChineseT2s
 
         status, headers, bodies = @app.call(env)
 
-        if status == 200
+        if status == 200 && bodies.present?
           params = env['rack.request.query_hash'] || {}
 
           if (env['rack.session']['chinese_t2s_lang'] || params['lang']) == 'cn'
@@ -26,6 +26,7 @@ module ChineseT2s
             when Rack::BodyProxy # Grape
               body = ChineseT2s::translate(bodies.body.first)
               bodies.body = [body]
+            when Sprockets::ProcessedAsset
             end
           end
         end

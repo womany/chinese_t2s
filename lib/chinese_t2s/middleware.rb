@@ -12,7 +12,7 @@ module ChineseT2s
         if status == 200 && bodies.present?
           params = env['rack.request.query_hash'] || {}
 
-          if (env['rack.session']['chinese_t2s_lang'] || params['lang']) == 'cn'
+          if params['lang'] == 'cn'
             case bodies
             when ActionDispatch::Response # Rails
               body = ChineseT2s::translate(bodies.body)

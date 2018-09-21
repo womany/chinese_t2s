@@ -6,12 +6,6 @@ module ChineseT2s
       end
 
       def call(env)
-        set_lang = env['QUERY_STRING'][/\bset_lang=(\w+)/, 1]
-
-        unless set_lang.nil?
-          env['rack.session'].delete('chinese_t2s_lang') if set_lang == 'tw'
-          env['rack.session']['chinese_t2s_lang'] = 'cn' if set_lang == 'cn'
-        end
 
         status, headers, bodies = @app.call(env)
 

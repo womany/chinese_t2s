@@ -1,3 +1,8 @@
+# v0.0.3
+
+* Remove session[:chinese_t2s_lang] and there is no auto-translating now
+* Remove set_lang params and auto translating after settin
+
 # v0.0.2
 
 * Thanks @godfat, get tongwen t2s tables now change to use `File.open().each_line`.

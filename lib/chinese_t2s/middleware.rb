@@ -6,7 +6,6 @@ module ChineseT2s
       end
 
       def call(env)
-
         status, headers, bodies = @app.call(env)
 
         if status == 200 && bodies.present?
@@ -18,6 +17,7 @@ module ChineseT2s
               body = ChineseT2s::translate(bodies.body)
               bodies.body = body
             when Rack::BodyProxy # Grape
+              # 限制給 Rails 3.x 和 4.0 使用
               if defined?(::Rails) && (::Rails::VERSION::MAJOR <= 3) || (::Rails::VERSION::MAJOR == 4 && ::RAILS::VERSION::MINOR == 0)
                 body = bodies.body.first
                 body.gsub!(/((\\u[0-9a-z]{4})+)/){ $1[2..-1].split('\\u').map{|s| s.to_i(16)}.pack('U*') }
